@@ -38,7 +38,7 @@ const CreateUser = () => {
     try {
       const response = await API.post("/api/protected/admin/user/create", user);
 
-      console.log("user create response", response);
+      // console.log("user create response", response);
 
       const formdata = new FormData();
       formdata.append("file", file);

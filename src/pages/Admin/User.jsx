@@ -18,7 +18,7 @@ const User = () => {
   const fetchUsers = async () => {
     try {
       const response = await API.get("/api/protected/admin/user/");
-      console.log("API Response:", response.data);
+      // console.log("API Response:", response.data);
 
       if (Array.isArray(response.data.data)) {
         setUsers(response.data.data);
@@ -39,7 +39,7 @@ const User = () => {
       const response = await API.delete(
         `/api/protected/admin/user/delete/${id}`
       );
-      console.log("User deleted:", response.data);
+      // console.log("User deleted:", response.data);
 
       // Refresh user list after deletion
       fetchUsers();

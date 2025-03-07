@@ -10,29 +10,29 @@ const UpdateUser = () => {
     lname: "",
     email: "",
     mobile: "",
-    role: "User",
+    role: "user",
   });
 
+  // Fetch user details when component mounts
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await API.get(`/api/protected/admin/user/get/${id}`);
-        if (response.data) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            fname: response.data.fname || "",
-            lname: response.data.lname || "",
-            email: response.data.email || "",
-            mobile: response.data.mobile || "",
-            role: response.data.role || "",
-          }));
+        if (response.data.data) {
+          setUser({
+            fname: response.data.data.fname || "",
+            lname: response.data.data.lname || "",
+            email: response.data.data.email || "",
+            mobile: response.data.data.mobile || "",
+          });
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
+
     fetchUser();
-  }, [id]);
+  }, [id]); // Runs only when `id` changes
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -86,17 +86,6 @@ const UpdateUser = () => {
         onChange={handleChange}
         className="w-full border p-2 mb-2"
       />
-
-      <label className="block">Role</label>
-      <select
-        name="role"
-        value={user.role}
-        onChange={handleChange}
-        className="w-full border p-2 mb-4"
-      >
-        <option value="User">User</option>
-        <option value="Admin">Admin</option>
-      </select>
 
       <div className="flex space-x-2">
         <button

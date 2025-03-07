@@ -8,18 +8,18 @@ const UserProfile = () => {
   const [error, setError] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  //
+  const fetchUserProfile = async () => {
+    try {
+      const response = await API.get("/api/protected/user/profile");
+      setUser(response.data.data);
+    } catch (err) {
+      setError("Failed to fetch user profile.");
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await API.get("/api/protected/user/profile");
-        setUser(response.data.data);
-      } catch (err) {
-        setError("Failed to fetch user profile.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUserProfile();
   }, []);
 
@@ -43,6 +43,7 @@ const UserProfile = () => {
           profileimage: response.data.filename, // ✅ Update profile image in state
         }));
       }
+      fetchUserProfile();
     } catch (err) {
       console.error("Image upload failed:", err);
     }
