@@ -1,0 +1,20 @@
+import userModel from "../models/Usermodel.js";
+import { hashPassword } from "./encryptPassword.js";
+import bcryptjs from "bcryptjs";
+
+async function createSuperAdmin() {
+  const superAdmin = await userModel.findOne({
+    email: "superadmin@gmail.com",
+  });
+  if (superAdmin) return;
+
+  userModel.create({
+    fname: "super",
+    lname: "admin",
+    email: "superadmin@gmail.com",
+    password: hashPassword("superadmin"),
+    role: "admin",
+  });
+}
+
+export default createSuperAdmin;
