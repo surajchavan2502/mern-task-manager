@@ -102,11 +102,13 @@ async function createUsersController(req, res) {
 
 async function getUserByIdController(req, res) {
   try {
-    const user = await userModel.findById(req.params.id).select("fname lname");
+    const user = await userModel
+      .findById(req.params.id)
+      .select("fname lname email mobile  ");
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return errorResponse(res, 400, "User not found");
     }
-    res.json(user);
+    successResponse(res, "User fetch Sucessfully", user);
   } catch (error) {
     console.log("_getUserByIdController_", error);
     return errorResponse(res, 500, "Internal server error");

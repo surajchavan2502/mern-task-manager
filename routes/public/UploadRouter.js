@@ -4,7 +4,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import userModel from "../../models/Usermodel.js";
-import { errorResponse } from "../../utils/serverResponse.js";
+import { errorResponse, successResponse } from "../../utils/serverResponse.js";
 
 const uploadPath = "./uploads";
 
@@ -76,9 +76,7 @@ async function fileUploadController(req, res) {
       return errorResponse(res, 404, "User not found");
     }
 
-    res
-      .status(200)
-      .json({ success: true, message: "Profile image updated", filename });
+    successResponse(res, "Profile image updated", filename);
   } catch (error) {
     console.error("fileUploadController Error:", error);
     return errorResponse(res, 500, "Internal server error");
